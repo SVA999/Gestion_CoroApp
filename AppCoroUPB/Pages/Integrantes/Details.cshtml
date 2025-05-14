@@ -1,0 +1,55 @@
+﻿@page
+@model AppCoroUPB.Pages.Integrantes.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Integrante</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Integrante.NombreCompleto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Integrante.NombreCompleto)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Integrante.idVinculo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Integrante.idVinculo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Integrante.idCarrera)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Integrante.idCarrera)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Integrante.FechaIngreso)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Integrante.FechaIngreso)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Integrante.IdVoz)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Integrante.IdVoz)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Integrante.IdEstado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Integrante.IdEstado)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Integrante.idInt">Editar</a> |
+    <a asp-page="./Index">Atras</a>
+</div>

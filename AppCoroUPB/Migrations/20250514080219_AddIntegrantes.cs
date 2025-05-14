@@ -22,7 +22,7 @@ namespace AppCoroUPB.Migrations
                     idCarrera = table.Column<int>(type: "int", nullable: false),
                     FechaIngreso = table.Column<DateOnly>(type: "date", nullable: false),
                     IdVoz = table.Column<int>(type: "int", nullable: false),
-                    IdEstado = table.Column<byte>(type: "tinyint", nullable: false)
+                    IdEstado = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

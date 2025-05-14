@@ -1,0 +1,65 @@
+﻿@page
+@model AppCoroUPB.Pages.Integrantes.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="text-center mb-3">Integrantes</h2>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Nuevo Integrante</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Integrante[0].NombreCompleto)
+            </th>
+            <th>
+                Vinculo
+            </th>
+            <th>
+                Carrera o Dependencia
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Integrante[0].FechaIngreso)
+            </th>
+            <th>
+                Tipo de voz
+            </th>
+            <th>
+                Estado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Integrante)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCompleto)
+                </td>
+                <td>
+                    @Model.GetNombreVinculo(item.idVinculo)
+                </td>
+                <td>
+                    @Model.GetNombreCarrera(item.idCarrera)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaIngreso)
+                </td>
+                <td>
+                    @Model.GetNombreVoz(item.IdVoz)
+                </td>
+                <td>
+                    @Model.GetNombreEstado(item.IdEstado)
+                </td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-primary btn-sm" asp-page="./Edit" asp-route-id="@item.idInt">Editar</a>
+                    <a class="btn btn-danger btn-sm" asp-page="./Delete" asp-route-id="@item.idInt">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

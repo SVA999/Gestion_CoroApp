@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppCoroUPB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250514080219_AddIntegrantes")]
-    partial class AddIntegrantes
+    [Migration("20250514094725_AddRelationIntegrantes")]
+    partial class AddRelationIntegrantes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,40 @@ namespace AppCoroUPB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AppCoroUPB.Models.Carrera_Dependencia", b =>
+                {
+                    b.Property<int>("idCarrera")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idCarrera"));
+
+                    b.Property<string>("Carrera")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idCarrera");
+
+                    b.ToTable("Carrera_Dependencia");
+                });
+
+            modelBuilder.Entity("AppCoroUPB.Models.ClasificacionVoz", b =>
+                {
+                    b.Property<int>("idVoz")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idVoz"));
+
+                    b.Property<string>("Voz")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idVoz");
+
+                    b.ToTable("ClasificacionVoz");
+                });
 
             modelBuilder.Entity("AppCoroUPB.Models.Ensayo", b =>
                 {
@@ -45,6 +79,23 @@ namespace AppCoroUPB.Migrations
                     b.HasKey("idEns");
 
                     b.ToTable("Ensayos");
+                });
+
+            modelBuilder.Entity("AppCoroUPB.Models.Estado", b =>
+                {
+                    b.Property<int>("idEst")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idEst"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idEst");
+
+                    b.ToTable("Estados");
                 });
 
             modelBuilder.Entity("AppCoroUPB.Models.Integrante", b =>
@@ -94,6 +145,23 @@ namespace AppCoroUPB.Migrations
                     b.HasKey("idLugEns");
 
                     b.ToTable("LugaresEnsayo");
+                });
+
+            modelBuilder.Entity("AppCoroUPB.Models.TipoVinculo", b =>
+                {
+                    b.Property<int>("idVinculo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idVinculo"));
+
+                    b.Property<string>("Vinculo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idVinculo");
+
+                    b.ToTable("TipoVinculo");
                 });
 #pragma warning restore 612, 618
         }

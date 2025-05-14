@@ -1,0 +1,139 @@
+﻿@page
+@model AppCoroUPB.Pages.Integrantes.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="text-center mb-3">Nuevo Integrante</h2>
+
+<form method="post">
+    <div class="row g-2 mb-3">
+        <div class="col-lg-6">
+
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="row mb-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <label class="col-sm-4 col-form-label">Numero de Documento</label>
+                        <div class="col-sm-8">
+                            <input asp-for="IntegranteDto.idInt" type="text" class="form-control" />
+                            <span asp-validation-for="IntegranteDto.NombreCompleto" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <label class="col-sm-4 col-form-label">Nombre</label>
+                        <div class="col-sm-8">
+                            <input asp-for="IntegranteDto.NombreCompleto" type="text" class="form-control" />
+                            <span asp-validation-for="IntegranteDto.NombreCompleto" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Tipo de Vinculo</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" asp-for="IntegranteDto.idVinculo" asp-items="@Model.sl_Vinculo" id="selectVinculo">
+                                <option value="">Selecciona el tipo de vinculo</option>
+                            </select>
+                            <span asp-validation-for="IntegranteDto.idVinculo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Carrera o Dependencia</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" asp-for="IntegranteDto.idCarrera" asp-items="@Model.sl_Carrera" id="selectCarrera">
+                                <option value="">Selecciona Carrera/Dependencia</option>
+                            </select>
+                            <span asp-validation-for="IntegranteDto.idCarrera" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Fecha de Ingreso</label>
+                        <div class="col-sm-8">
+                            <input asp-for="IntegranteDto.FechaIngreso" type="date" class="form-control" />
+                            <span asp-validation-for="IntegranteDto.FechaIngreso" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Tipo de voz</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" asp-for="IntegranteDto.IdVoz" asp-items="@Model.sl_Voz" id="selectVoz">
+                                <option value="">Selecciona el tipo de voz</option>
+                            </select>
+                            <span asp-validation-for="IntegranteDto.IdVoz" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Estado</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" asp-for="IntegranteDto.IdEstado" asp-items="@Model.sl_Estado" id="selectEstado" >
+                                <option value="">Selecciona un estado</option>
+                            </select>
+                            <span asp-validation-for="IntegranteDto.IdEstado" class="text-danger" ></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary me-2" id="btnRegistrar" disabled>Registrar</button>
+    <a class="btn btn-outline-primary" asp-page="./Index" role="button">Cancelar</a>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnRegistrar = document.getElementById('btnRegistrar');
+        const inputIdInt = document.querySelector('input[name="IntegranteDto.idInt"]');
+        const inputNombreCompleto = document.querySelector('input[name="IntegranteDto.NombreCompleto"]');
+        const selectVinculo = document.getElementById('selectVinculo');
+        const selectCarrera = document.getElementById('selectCarrera');
+        const inputFechaIngreso = document.querySelector('input[name="IntegranteDto.FechaIngreso"]');
+        const selectVoz = document.getElementById('selectVoz');
+        const selectEstado = document.getElementById('selectEstado'); // Aunque esté deshabilitado, lo incluimos por si acaso
+
+        function verificarCampos() {
+            if (inputIdInt.value &&
+                inputNombreCompleto.value &&
+                selectVinculo.value && selectVinculo.value !== "" &&
+                selectCarrera.value && selectCarrera.value !== "" &&
+                inputFechaIngreso.value &&
+                selectVoz.value && selectVoz.value !== "") {
+                btnRegistrar.removeAttribute('disabled');
+            } else {
+                btnRegistrar.setAttribute('disabled', 'disabled');
+            }
+        }
+
+        // Agrega event listeners a los campos para verificar cuando cambian
+        inputIdInt.addEventListener('input', verificarCampos);
+        inputNombreCompleto.addEventListener('input', verificarCampos);
+        selectVinculo.addEventListener('change', verificarCampos);
+        selectCarrera.addEventListener('change', verificarCampos);
+        inputFechaIngreso.addEventListener('change', verificarCampos);
+        selectVoz.addEventListener('change', verificarCampos);
+
+        // Llama a verificarCampos inicialmente para establecer el estado del botón al cargar la página
+        verificarCampos();
+    });
+</script>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
