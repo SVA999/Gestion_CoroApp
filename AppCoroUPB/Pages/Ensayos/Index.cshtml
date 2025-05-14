@@ -1,0 +1,34 @@
+﻿@page
+@model AppCoroUPB.Pages.Ensayos.IndexModel
+@{
+}
+
+<h2 class="text-center mb-3">Ensayos</h2>
+<a class="btn btn-primary" asp-page="/Ensayos/Create">Nuevo Ensayo</a>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Fecha</th>
+			<th>Hora</th>
+			<th>Lugar de Ensayo</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody class="table-group-divider">
+		@foreach (var ensayo in Model.l_ensayos){
+				<tr>
+				<td>@ensayo.idEns</td>
+				<td>@ensayo.Fecha</td>
+				<td>@ensayo.Hora</td>
+				<td>@Model.GetNombreLugarEnsayo(ensayo.IdLugEns)</td>
+				<td style="white-space:nowrap">
+					<a class="btn btn-primary btn-sm" asp-page="/Ensayos/Edit" asp-route-id="@ensayo.idEns">Editar</a>
+					<a class="btn btn-danger btn-sm" asp-page="/Ensayos/Delete" asp-route-id="@ensayo.idEns">Borrar</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
