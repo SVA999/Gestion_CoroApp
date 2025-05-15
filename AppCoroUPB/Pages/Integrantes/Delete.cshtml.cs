@@ -12,52 +12,24 @@ namespace AppCoroUPB.Pages.Integrantes
 {
     public class DeleteModel : PageModel
     {
-        private readonly AppCoroUPB.Services.ApplicationDbContext _context;
+        private readonly AppCoroUPB.Services.ApplicationDbContext context;
 
         public DeleteModel(AppCoroUPB.Services.ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        [BindProperty]
-        public Integrante Integrante { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var integrante = await _context.Integrantes.FirstOrDefaultAsync(m => m.idInt == id);
-
-            if (integrante == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Integrante = integrante;
-            }
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var integrante = await _context.Integrantes.FindAsync(id);
+            var integrante = context.Integrantes.Find(id); 
             if (integrante != null)
             {
-                Integrante = integrante;
-                _context.Integrantes.Remove(Integrante);
-                await _context.SaveChangesAsync();
+                context.Integrantes.Remove(integrante);
+                context.SaveChanges();
+
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Integrantes/Index");
         }
     }
 }

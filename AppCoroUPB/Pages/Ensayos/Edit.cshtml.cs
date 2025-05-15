@@ -47,7 +47,6 @@ namespace AppCoroUPB.Pages.Ensayos
             EnsayosDto.Hora = ensayo.Hora;
             EnsayosDto.IdLugEns = ensayo.IdLugEns;
 
-            // Inicializar Fecha y Hora con valores predeterminados
             EnsayosDto = new EnsayosDto
             {
                 IdLugEns = Ensayo.IdLugEns

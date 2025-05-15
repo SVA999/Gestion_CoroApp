@@ -1,10 +1,50 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Sistema de Gestión Coro UPB";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero bg-dark text-white py-5 mb-4">
+    <div class="container text-center">
+        <img src="~/images/upb-logo01.png" alt="Logo UPB" height="80" class="mb-3" />
+        <h1 class="display-4">Bienvenido al Sistema de Gestión del Coro UPB</h1>
+        <p class="lead">Potencia la organización y el talento de nuestro coro universitario.</p>
+        <a asp-page="/Integrantes/Create" class="btn btn-primary btn-lg">Registrar Nuevo Integrante</a>
+        <a asp-page="/Ensayos/Index" class="btn btn-outline-light btn-lg ml-2">Ver Ensayos</a>
+    </div>
 </div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4 text-center mb-4">
+            <i class="bi bi-people-fill text-danger display-4"></i>
+            <h3>Gestión de Integrantes</h3>
+            <p>Administra fácilmente la información de cada miembro del coro: datos personales, voz, estado y más.</p>
+            <a asp-page="/Integrantes/Index" class="btn btn-link">Ver Integrantes</a>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <i class="bi bi-calendar-event text-danger display-4"></i>
+            <h3>Planificación de Ensayos</h3>
+            <p>Organiza y programa los ensayos, gestiona la asistencia y comunica los detalles importantes a los integrantes.</p>
+            <a asp-page="/Ensayos/Create" class="btn btn-link">Crear Nuevo Ensayo</a>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <i class="bi bi-music-note-list text-danger display-4"></i>
+            <h3>Repertorio Musical</h3>
+            <p>Gestiona el repertorio del coro, guarda partituras, enlaces a recursos y realiza un seguimiento de las obras interpretadas.</p>
+            <a href="#" class="btn btn-link">Gestionar Repertorio (Próximamente)</a>
+        </div>
+    </div>
+</div>
+
+<div class="py-5 bg-secondary text-white">
+    <div class="container text-center">
+        <h2>¿Listo para empezar?</h2>
+        <p class="lead">Únete a la experiencia de gestión coral más eficiente.</p>
+        <a asp-page="/Integrantes/Create" class="btn btn-danger btn-lg">¡Regístrate ahora!</a>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
+}

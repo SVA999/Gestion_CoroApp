@@ -1,0 +1,73 @@
+﻿/* site.upb.css */
+
+/* Estilos generales (puedes mantener o modificar lo que ya tenías) */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8f9fa; /* Un fondo muy claro */
+}
+
+/* Hero Section */
+.hero {
+    background-color: #000; /* Fondo negro UPB */
+    color: #fff;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+    .hero h1 {
+        margin-bottom: 20px;
+    }
+
+    .hero .btn-primary {
+        background-color: #000;
+        border-color: #000;
+    }
+
+        .hero .btn-primary:hover {
+            background-color: firebrick;
+            border-color: firebrick;
+        }
+
+    .hero .btn-outline-light {
+        border-color: #fff;
+        color: #fff;
+    }
+
+        .hero .btn-outline-light:hover {
+            background-color: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+/* Características Principales */
+.bi { /* Estilos para los iconos de Bootstrap Icons */
+    color: firebrick !important; /* Asegura que los iconos sean rojos */
+}
+
+/* ¿Por qué usar nuestro Sistema? */
+.bg-light {
+    background-color: #f8f9fa !important; /* Asegura el fondo claro */
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+/* Llamada a la Acción Final */
+.bg-secondary {
+    background-color: #000 !important; /* Fondo negro para la llamada a la acción */
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+    .bg-secondary .btn-danger {
+        background-color: firebrick; /* Botón rojo UPB */
+        border-color: firebrick;
+        color: #fff;
+    }
+
+        .bg-secondary .btn-danger:hover {
+            background-color: #000;
+            border-color: #000;
+        }
+
+/* Puedes agregar más estilos para otras secciones o elementos */

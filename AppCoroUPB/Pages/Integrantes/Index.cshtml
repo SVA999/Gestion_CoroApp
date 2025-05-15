@@ -12,6 +12,9 @@
 <table class="table">
     <thead>
         <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Integrante[0].idInt)
+            </td>
             <th>
                 @Html.DisplayNameFor(model => model.Integrante[0].NombreCompleto)
             </th>
@@ -37,6 +40,9 @@
         @foreach (var item in Model.Integrante)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idInt)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NombreCompleto)
                 </td>

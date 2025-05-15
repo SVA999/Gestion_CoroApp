@@ -7,6 +7,14 @@
 
 <h2 class="text-center mb-3">Nuevo Integrante</h2>
 
+@if (Model.updateSuccess.Length > 0)
+{
+    <div class="alert alert-danger  alert-dismissible fade show" role="alert">
+        <strong>@Model.updateSuccess</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <form method="post">
     <div class="row g-2 mb-3">
         <div class="col-lg-6">
@@ -25,7 +33,7 @@
 
                     <div class="row mb-3">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <label class="col-sm-4 col-form-label">Nombre</label>
+                        <label class="col-sm-4 col-form-label">Nombre Completo</label>
                         <div class="col-sm-8">
                             <input asp-for="IntegranteDto.NombreCompleto" type="text" class="form-control" />
                             <span asp-validation-for="IntegranteDto.NombreCompleto" class="text-danger"></span>
@@ -97,41 +105,75 @@
     <a class="btn btn-outline-primary" asp-page="./Index" role="button">Cancelar</a>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const btnRegistrar = document.getElementById('btnRegistrar');
-        const inputIdInt = document.querySelector('input[name="IntegranteDto.idInt"]');
-        const inputNombreCompleto = document.querySelector('input[name="IntegranteDto.NombreCompleto"]');
-        const selectVinculo = document.getElementById('selectVinculo');
-        const selectCarrera = document.getElementById('selectCarrera');
-        const inputFechaIngreso = document.querySelector('input[name="IntegranteDto.FechaIngreso"]');
-        const selectVoz = document.getElementById('selectVoz');
-        const selectEstado = document.getElementById('selectEstado'); // Aunque esté deshabilitado, lo incluimos por si acaso
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnRegistrar = document.getElementById('btnRegistrar');
+            const inputIdInt = document.querySelector('input[name="IntegranteDto.idInt"]');
+            const inputNombreCompleto = document.querySelector('input[name="IntegranteDto.NombreCompleto"]');
+            const selectVinculo = document.getElementById('selectVinculo');
+            const selectCarrera = document.getElementById('selectCarrera');
+            const inputFechaIngreso = document.querySelector('input[name="IntegranteDto.FechaIngreso"]');
+            const selectVoz = document.getElementById('selectVoz');
+            const selectEstado = document.getElementById('selectEstado'); // Aunque esté deshabilitado, lo incluimos por si acaso
 
-        function verificarCampos() {
-            if (inputIdInt.value &&
-                inputNombreCompleto.value &&
-                selectVinculo.value && selectVinculo.value !== "" &&
-                selectCarrera.value && selectCarrera.value !== "" &&
-                inputFechaIngreso.value &&
-                selectVoz.value && selectVoz.value !== "") {
-                btnRegistrar.removeAttribute('disabled');
-            } else {
-                btnRegistrar.setAttribute('disabled', 'disabled');
+            function verificarCampos() {
+                let idIntValido = false;
+                let nombreCompletoValido = false;
+                let otrosCamposValidos = false;
+
+                // Verificar idInt
+                if (inputIdInt.value) {
+                    const idIntRegex = /^[0-9]{5,10}$/;
+                    idIntValido = idIntRegex.test(inputIdInt.value);
+                    if (!idIntValido) {
+                        inputIdInt.classList.add('is-invalid'); // Añade clase para feedback visual de error (Bootstrap)
+                    } else {
+                        inputIdInt.classList.remove('is-invalid');
+                    }
+                } else {
+                    inputIdInt.classList.remove('is-invalid'); // Limpiar feedback si el campo está vacío
+                }
+
+                // Verificar NombreCompleto
+                if (inputNombreCompleto.value) {
+                    const nombreCompletoRegex = /^[^\d]+$/; // Excluye dígitos
+                    nombreCompletoValido = nombreCompletoRegex.test(inputNombreCompleto.value);
+                    if (!nombreCompletoValido) {
+                        inputNombreCompleto.classList.add('is-invalid'); // Añade clase para feedback visual de error (Bootstrap)
+                    } else {
+                        inputNombreCompleto.classList.remove('is-invalid');
+                    }
+                } else {
+                    inputNombreCompleto.classList.remove('is-invalid'); // Limpiar feedback si el campo está vacío
+                }
+
+                // Verificar los otros campos requeridos
+                otrosCamposValidos = (
+                    selectVinculo.value && selectVinculo.value !== "" &&
+                    selectCarrera.value && selectCarrera.value !== "" &&
+                    inputFechaIngreso.value &&
+                    selectVoz.value && selectVoz.value !== ""
+                );
+
+                // Habilitar el botón solo si todos los campos (incluyendo las nuevas validaciones) son válidos
+                if (idIntValido && nombreCompletoValido && otrosCamposValidos) {
+                    btnRegistrar.removeAttribute('disabled');
+                } else {
+                    btnRegistrar.setAttribute('disabled', 'disabled');
+                }
             }
-        }
 
-        // Agrega event listeners a los campos para verificar cuando cambian
-        inputIdInt.addEventListener('input', verificarCampos);
-        inputNombreCompleto.addEventListener('input', verificarCampos);
-        selectVinculo.addEventListener('change', verificarCampos);
-        selectCarrera.addEventListener('change', verificarCampos);
-        inputFechaIngreso.addEventListener('change', verificarCampos);
-        selectVoz.addEventListener('change', verificarCampos);
+            // Agrega event listeners a los campos para verificar cuando cambian
+            inputIdInt.addEventListener('input', verificarCampos);
+            inputNombreCompleto.addEventListener('input', verificarCampos);
+            selectVinculo.addEventListener('change', verificarCampos);
+            selectCarrera.addEventListener('change', verificarCampos);
+            inputFechaIngreso.addEventListener('change', verificarCampos);
+            selectVoz.addEventListener('change', verificarCampos);
 
-        // Llama a verificarCampos inicialmente para establecer el estado del botón al cargar la página
-        verificarCampos();
-    });
-</script>
+            // Llama a verificarCampos inicialmente para establecer el estado del botón al cargar la página
+            verificarCampos();
+        });
+    </script>
 </form>
 
 @section Scripts {
