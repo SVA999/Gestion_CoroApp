@@ -1,5 +1,6 @@
 ﻿using AppCoroUPB.Models;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace AppCoroUPB.Services
 {
@@ -21,6 +22,24 @@ namespace AppCoroUPB.Services
         public DbSet<ClasificacionVoz> ClasificacionVoz { get; set; }
         public DbSet<EstadoInt> Estados { get; set; }
 
+        public DbSet<Cancion> Canciones { get; set; }
+
+        public DbSet<CompositorCancion> CompositorCanciones { get; set; }
+
+        public DbSet<ClasificacionCancion> ClasificacionCancion { get; set; }
+
+        public DbSet<Idioma> Idiomas { get; set; }
+
+        public DbSet<Director> Directores { get; set; }
+
+        public DbSet<Presentacion> Presentaciones { get; set; }
+
+        public DbSet<TipoEvento> TipoEvento { get; set; }
+
+        public DbSet<LugarPresentacion> LugaresPresentaciones { get; set; }
+
+        
     }
+    
 
 }

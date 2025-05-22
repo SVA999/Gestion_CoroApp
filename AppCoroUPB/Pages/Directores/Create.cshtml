@@ -1,0 +1,127 @@
+﻿@page
+@model AppCoroUPB.Pages.Directores.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Director</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Director.NombreCompleto" class="control-label"></label>
+                <input asp-for="Director.NombreCompleto" class="form-control" />
+                <span asp-validation-for="Director.NombreCompleto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Director.FechaInicio" class="control-label"></label>
+                <input asp-for="Director.FechaInicio" type="date" class="form-control" />
+                <span asp-validation-for="Director.FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Director.idEstado" class="control-label"></label>
+                <select class="form-control" asp-for="Director.idEstado" asp-items="@Model.sl_Estado" id="selectEstado">
+                    <option value="">Selecciona un estado</option>
+                </select>
+                <span asp-validation-for="Director.idEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Cancelar</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnCreate = document.querySelector('input[type="submit"][value="Create"]');
+        const inputNombreCompleto = document.querySelector('input[name="Director.NombreCompleto"]');
+        const inputFechaInicio = document.querySelector('input[name="Director.FechaInicio"]');
+        const selectEstado = document.getElementById('selectEstado');
+
+        function verificarCamposDirector() {
+            let nombreCompletoValido = false;
+            let fechaInicioValida = false;
+            let estadoValido = false;
+
+            // 1. Validar NombreCompleto (no vacío y solo letras/espacios/caracteres especiales, no dígitos)
+            if (inputNombreCompleto) {
+                if (inputNombreCompleto.value.trim() !== '') {
+                    const nombreCompletoRegex = /^[^\d]+$/; // Excluye dígitos
+                    if (nombreCompletoRegex.test(inputNombreCompleto.value.trim())) {
+                        nombreCompletoValido = true;
+                        inputNombreCompleto.classList.remove('is-invalid');
+                    } else {
+                        nombreCompletoValido = false;
+                        inputNombreCompleto.classList.add('is-invalid');
+                    }
+                } else {
+                    nombreCompletoValido = false;
+                    inputNombreCompleto.classList.add('is-invalid');
+                }
+            }
+
+            // 2. Validar FechaInicio (no en el futuro y no anterior a 2016)
+            if (inputFechaInicio) {
+                if (inputFechaInicio.value) {
+                    const fechaSeleccionada = new Date(inputFechaInicio.value);
+                    const fechaActual = new Date();
+                    const fechaMinima = new Date('2016-01-01'); // 1 de enero de 2016
+
+                    // Ajustar fechaActual para comparar solo la fecha sin la hora
+                    fechaActual.setHours(0, 0, 0, 0);
+
+                    if (fechaSeleccionada <= fechaActual && fechaSeleccionada >= fechaMinima) {
+                        fechaInicioValida = true;
+                        inputFechaInicio.classList.remove('is-invalid');
+                    } else {
+                        fechaInicioValida = false;
+                        inputFechaInicio.classList.add('is-invalid');
+                    }
+                } else {
+                    fechaInicioValida = false;
+                    inputFechaInicio.classList.add('is-invalid');
+                }
+            }
+
+            // 3. Validar Estado (selección no vacía)
+            if (selectEstado) {
+                if (selectEstado.value && selectEstado.value !== '') {
+                    estadoValido = true;
+                    selectEstado.classList.remove('is-invalid');
+                } else {
+                    estadoValido = false;
+                    selectEstado.classList.add('is-invalid');
+                }
+            }
+
+            // Habilitar o Deshabilitar el botón 'Create'
+            if (nombreCompletoValido && fechaInicioValida && estadoValido) {
+                btnCreate.removeAttribute('disabled');
+            } else {
+                btnCreate.setAttribute('disabled', 'disabled');
+            }
+        }
+
+        // Agrega event listeners para que la validación se ejecute cuando los campos cambien
+        if (inputNombreCompleto) inputNombreCompleto.addEventListener('input', verificarCamposDirector);
+        if (inputFechaInicio) inputFechaInicio.addEventListener('change', verificarCamposDirector); // 'change' para inputs de tipo date
+        if (selectEstado) selectEstado.addEventListener('change', verificarCamposDirector);
+
+        // Llama a la función de verificación una vez al cargar la página para establecer el estado inicial del botón
+        verificarCamposDirector();
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

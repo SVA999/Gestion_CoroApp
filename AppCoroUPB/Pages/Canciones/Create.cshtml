@@ -1,0 +1,147 @@
+﻿@page
+@model AppCoroUPB.Pages.Canciones.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Cancion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Cancion.Titulo" class="control-label"></label>
+                <input asp-for="Cancion.Titulo" class="form-control" />
+                <span asp-validation-for="Cancion.Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cancion.idComp" class="control-label"></label>
+                <select class="form-control" asp-for="Cancion.idComp" asp-items="@Model.sl_Compositor" id="selectComp">
+                    <option value="">Selecciona un compositor</option>
+                </select>
+                <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                <span asp-validation-for="Cancion.idComp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cancion.idIdioma" class="control-label"></label>
+                <select class="form-control" asp-for="Cancion.idIdioma" asp-items="@Model.sl_Idioma" id="selectIdioma">
+                    <option value="">Selecciona un idioma</option>
+                </select>
+                <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                <span asp-validation-for="Cancion.idIdioma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cancion.Duracion" class="control-label"></label>
+                <input asp-for="Cancion.Duracion" class="form-control" />
+                <span asp-validation-for="Cancion.Duracion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cancion.idClasif" class="control-label"></label>
+                <select class="form-control" asp-for="Cancion.idClasif" asp-items="@Model.sl_Clasificacion" id="selectClasificacion">
+                    <option value="">Selecciona una Clasificaion</option>
+                </select>
+                <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                <span asp-validation-for="Cancion.idClasif" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Cancelar</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnCreate = document.querySelector('input[type="submit"][value="Create"]');
+        const inputTitulo = document.querySelector('input[name="Cancion.Titulo"]');
+        const selectComp = document.getElementById('selectComp');
+        const selectIdioma = document.getElementById('selectIdioma');
+        const inputDuracion = document.querySelector('input[name="Cancion.Duracion"]');
+        const selectClasificacion = document.getElementById('selectClasificacion');
+
+        function verificarCamposCancion() {
+            let tituloValido = false;
+            let compositorValido = false;
+            let idiomaValido = false;
+            let duracionValida = false;
+            let clasificacionValida = false;
+
+            // 1. Validar Título (no vacío)
+            if (inputTitulo && inputTitulo.value.trim() !== '') {
+                tituloValido = true;
+                inputTitulo.classList.remove('is-invalid');
+            } else if (inputTitulo) {
+                tituloValido = false;
+                inputTitulo.classList.add('is-invalid');
+            }
+
+            // 2. Validar Compositor (selección no vacía)
+            if (selectComp && selectComp.value && selectComp.value !== '') {
+                compositorValido = true;
+                selectComp.classList.remove('is-invalid');
+            } else if (selectComp) {
+                compositorValido = false;
+                selectComp.classList.add('is-invalid');
+            }
+
+            // 3. Validar Idioma (selección no vacía)
+            if (selectIdioma && selectIdioma.value && selectIdioma.value !== '') {
+                idiomaValido = true;
+                selectIdioma.classList.remove('is-invalid');
+            } else if (selectIdioma) {
+                idiomaValido = false;
+                selectIdioma.classList.add('is-invalid');
+            }
+
+            // 4. Validar Duración (número positivo)
+            if (inputDuracion) {
+                const duracionValue = parseFloat(inputDuracion.value);
+                if (!isNaN(duracionValue) && duracionValue > 0) {
+                    duracionValida = true;
+                    inputDuracion.classList.remove('is-invalid');
+                } else {
+                    duracionValida = false;
+                    inputDuracion.classList.add('is-invalid');
+                }
+            }
+
+            // 5. Validar Clasificación (selección no vacía)
+            if (selectClasificacion && selectClasificacion.value && selectClasificacion.value !== '') {
+                clasificacionValida = true;
+                selectClasificacion.classList.remove('is-invalid');
+            } else if (selectClasificacion) {
+                clasificacionValida = false;
+                selectClasificacion.classList.add('is-invalid');
+            }
+
+            // Habilitar o Deshabilitar el botón 'Create'
+            if (tituloValido && compositorValido && idiomaValido && duracionValida && clasificacionValida) {
+                btnCreate.removeAttribute('disabled');
+            } else {
+                btnCreate.setAttribute('disabled', 'disabled');
+            }
+        }
+
+        // Agrega event listeners a los campos para verificar cuando cambian
+        if (inputTitulo) inputTitulo.addEventListener('input', verificarCamposCancion);
+        if (selectComp) selectComp.addEventListener('change', verificarCamposCancion);
+        if (selectIdioma) selectIdioma.addEventListener('change', verificarCamposCancion);
+        if (inputDuracion) inputDuracion.addEventListener('input', verificarCamposCancion); // 'input' para cambios en tiempo real
+        if (selectClasificacion) selectClasificacion.addEventListener('change', verificarCamposCancion);
+
+        // Llama a la función de verificación una vez al cargar la página para establecer el estado inicial del botón
+        verificarCamposCancion();
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

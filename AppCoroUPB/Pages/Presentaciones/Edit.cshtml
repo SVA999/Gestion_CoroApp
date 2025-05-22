@@ -1,0 +1,45 @@
+﻿@page
+@model AppCoroUPB.Pages.Presentaciones.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Presentacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Presentacion.idPresent" />
+            <div class="form-group">
+                <label asp-for="Presentacion.Fecha" class="control-label"></label>
+                <input asp-for="Presentacion.Fecha" class="form-control" />
+                <span asp-validation-for="Presentacion.Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Presentacion.idLugPresent" class="control-label"></label>
+                <input asp-for="Presentacion.idLugPresent" class="form-control" />
+                <span asp-validation-for="Presentacion.idLugPresent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Presentacion.idEvent" class="control-label"></label>
+                <input asp-for="Presentacion.idEvent" class="form-control" />
+                <span asp-validation-for="Presentacion.idEvent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

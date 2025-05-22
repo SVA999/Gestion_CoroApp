@@ -1,0 +1,48 @@
+﻿@page
+@model AppCoroUPB.Pages.Directores.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Director[0].NombreCompleto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Director[0].FechaInicio)
+            </th>
+            <th>
+                Estado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Director) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                    @Model.GetEstado(item.idEstado)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.idDic">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.idDic">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.idDic">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

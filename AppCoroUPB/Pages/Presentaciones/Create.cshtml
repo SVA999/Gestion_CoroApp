@@ -1,0 +1,126 @@
+﻿@page
+@model AppCoroUPB.Pages.Presentaciones.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Presentacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Presentacion.Fecha" class="control-label"></label>
+                <input asp-for="Presentacion.Fecha" type="date" class="form-control" />
+                <span asp-validation-for="Presentacion.Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Presentacion.idLugPresent" class="control-label"></label>
+                <select class="form-control" asp-for="Presentacion.idLugPresent" asp-items="@Model.sl_LugarPresent" id="selectLugar">
+                    <option value="">Selecciona un lugar</option>
+                </select>
+                <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                <span asp-validation-for="Presentacion.idLugPresent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Presentacion.idEvent" class="control-label"></label>
+                <select class="form-control" asp-for="Presentacion.idEvent" asp-items="@Model.sl_Eventos" id="selectEvento">
+                    <option value="">Selecciona tipo de evento</option>
+                </select>
+                <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                <span asp-validation-for="Presentacion.idEvent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Cancelar</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnCreate = document.querySelector('input[type="submit"][value="Create"]');
+        const inputFechaPresentacion = document.querySelector('input[name="Presentacion.Fecha"]');
+        const selectLugar = document.getElementById('selectLugar'); // ID del select de lugar
+        const selectEvento = document.getElementById('selectEvento'); // ID del select de evento
+
+        function verificarCamposPresentacion() {
+            let fechaValida = false;
+            let lugarValido = false;
+            let eventoValido = false;
+
+            // 1. Validar la Fecha de Presentación
+            if (inputFechaPresentacion) {
+                if (inputFechaPresentacion.value) {
+                    const fechaSeleccionada = new Date(inputFechaPresentacion.value);
+                    const fechaMinima = new Date('2016-01-01'); // 1 de enero de 2016
+
+                    if (fechaSeleccionada >= fechaMinima) {
+                        fechaValida = true;
+                        inputFechaPresentacion.classList.remove('is-invalid');
+                    } else {
+                        fechaValida = false;
+                        inputFechaPresentacion.classList.add('is-invalid');
+                    }
+                } else {
+                    // El campo de fecha está vacío
+                    fechaValida = false;
+                    inputFechaPresentacion.classList.add('is-invalid');
+                }
+            } else {
+                fechaValida = true; // Si el input de fecha no existe, asume que es válido
+            }
+
+            // 2. Validar el Lugar de Presentación (selectLugar)
+            if (selectLugar && selectLugar.value && selectLugar.value !== "") {
+                lugarValido = true;
+                selectLugar.classList.remove('is-invalid');
+            } else if (selectLugar) {
+                lugarValido = false;
+                selectLugar.classList.add('is-invalid');
+            } else {
+                lugarValido = true; // Si el select no existe, asume que es válido
+            }
+
+            // 3. Validar el Tipo de Evento (selectEvento)
+            if (selectEvento && selectEvento.value && selectEvento.value !== "") {
+                eventoValido = true;
+                selectEvento.classList.remove('is-invalid');
+            } else if (selectEvento) {
+                eventoValido = false;
+                selectEvento.classList.add('is-invalid');
+            } else {
+                eventoValido = true; // Si el select no existe, asume que es válido
+            }
+
+
+            // Habilitar/Deshabilitar el botón 'Create'
+            if (fechaValida && lugarValido && eventoValido) {
+                btnCreate.removeAttribute('disabled');
+            } else {
+                btnCreate.setAttribute('disabled', 'disabled');
+            }
+        }
+
+        // Agrega event listeners para que la validación se ejecute cuando los campos cambien
+        if (inputFechaPresentacion) inputFechaPresentacion.addEventListener('change', verificarCamposPresentacion);
+        if (selectLugar) selectLugar.addEventListener('change', verificarCamposPresentacion);
+        if (selectEvento) selectEvento.addEventListener('change', verificarCamposPresentacion);
+
+        // Llama a la función de verificación una vez al cargar la página para establecer el estado inicial del botón
+        verificarCamposPresentacion();
+    });
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

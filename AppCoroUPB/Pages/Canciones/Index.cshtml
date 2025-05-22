@@ -1,0 +1,60 @@
+﻿@page
+@model AppCoroUPB.Pages.Canciones.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cancion[0].Titulo)
+            </th>
+            <th>
+                Compositor
+            </th>
+            <th>
+                Idioma
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cancion[0].Duracion)
+            </th>
+            <th>
+                Clasificacion
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Cancion) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Model.GetCompositor(item.idComp)
+            </td>
+            <td>
+               @Model.GetIdioma(item.idIdioma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duracion)
+            </td>
+            <td>
+               @Model.GetClasificacion(item.idClasif)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.idCanc">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.idCanc">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.idCanc">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
